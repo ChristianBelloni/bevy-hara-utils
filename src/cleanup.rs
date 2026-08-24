@@ -27,19 +27,19 @@ impl<S: States, T: MarkerCleanable<S> + bevy::prelude::Component> Cleanable<S> f
 }
 
 pub trait AppCleanupExt {
-    fn add_cleanup_system<S: States, C: Cleanable<S>, SMarker>(&mut self, _: C)
+    fn add_cleanup_system<S: States, C: Cleanable<S>, SMarker>(&mut self, _: C) -> &mut Self
     where
         C::CleanupSystemType: IntoSystem<(), (), SMarker>;
 }
 
 impl AppCleanupExt for App {
-    fn add_cleanup_system<S, C, SMarker>(&mut self, _: C)
+    fn add_cleanup_system<S, C, SMarker>(&mut self, _: C) -> &mut Self
     where
         C::CleanupSystemType: IntoSystem<(), (), SMarker>,
         S: States,
         C: Cleanable<S>,
     {
-        self.add_systems(OnExit(C::STATE), C::CLEANUP_SYSTEM);
+        self.add_systems(OnExit(C::STATE), C::CLEANUP_SYSTEM)
     }
 }
 

@@ -1,7 +1,9 @@
 [package]
 name = "bevy-hara-utils"
-version = "0.1.0"
+version = "0.1.2"
 edition = "2024"
+description = "Opinionated set of utilities"
+license = "MIT"
 
 [dependencies]
 bevy = "0.19.1"
