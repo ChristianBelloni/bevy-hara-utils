@@ -2,6 +2,7 @@ pub mod asset_loader;
 pub mod button;
 pub mod cleanup;
 pub mod component;
+pub mod state;
 
 pub mod prelude {
     pub use crate::asset_loader::game_state;
