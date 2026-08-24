@@ -187,7 +187,7 @@ macro_rules! game_state {
            pub trait [< $state Ext >] {
                 fn [< init_ $state:snake >](&mut self) -> &mut Self;
 
-                fn [< run_in_ $state:snake >]<S, M>(
+                fn [< run_in_ $state:snake >]<M>(
                     &mut self,
                     schedule: impl ::bevy::ecs::schedule::ScheduleLabel,
                     systems: impl ::bevy::prelude::IntoScheduleConfigs<::bevy::ecs::system::ScheduleSystem, M>,
@@ -202,7 +202,7 @@ macro_rules! game_state {
                         .add_loading_state($crate::game_state!([< Loading $state >]$(, [$($collection),*])? ))
                 }
 
-                fn [< run_in_ $state:snake >]<S, M>(
+                fn [< run_in_ $state:snake >]<M>(
                     &mut self,
                     schedule: impl ::bevy::ecs::schedule::ScheduleLabel,
                     systems: impl ::bevy::prelude::IntoScheduleConfigs<::bevy::ecs::system::ScheduleSystem, M>,
