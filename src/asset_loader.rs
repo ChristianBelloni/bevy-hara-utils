@@ -187,9 +187,19 @@ macro_rules! game_state {
            pub trait [< $state Ext >] {
                 fn [< init_ $state:snake >](&mut self) -> &mut Self;
 
-                fn [< run_in_ $state:snake >]<M>(
+                fn [< add_in_ $state:snake _systems>]<M>(
                     &mut self,
                     schedule: impl ::bevy::ecs::schedule::ScheduleLabel,
+                    systems: impl ::bevy::prelude::IntoScheduleConfigs<::bevy::ecs::system::ScheduleSystem, M>,
+                ) -> &mut Self;
+
+                fn [< add_on_enter_ $state:snake _systems >]<M>(
+                    &mut self,
+                    systems: impl ::bevy::prelude::IntoScheduleConfigs<::bevy::ecs::system::ScheduleSystem, M>,
+                ) -> &mut Self;
+
+                fn [< add_on_exit_ $state:snake _systems >]<M>(
+                    &mut self,
                     systems: impl ::bevy::prelude::IntoScheduleConfigs<::bevy::ecs::system::ScheduleSystem, M>,
                 ) -> &mut Self;
             }
@@ -202,14 +212,30 @@ macro_rules! game_state {
                         .add_loading_state($crate::game_state!([< Loading $state >]$(, [$($collection),*])? ))
                 }
 
-                fn [< run_in_ $state:snake >]<M>(
+                fn [< add_in_ $state:snake _systems>]<M>(
                     &mut self,
                     schedule: impl ::bevy::ecs::schedule::ScheduleLabel,
                     systems: impl ::bevy::prelude::IntoScheduleConfigs<::bevy::ecs::system::ScheduleSystem, M>,
                 ) -> &mut Self {
                     use $crate::state::AppStateExt;
 
-                    self.add_state_system(schedule, systems, [< Loading $state >]::Loaded)
+                    self.add_in_state_systems(schedule, systems, [< Loading $state >]::Loaded)
+                }
+
+                fn [< add_on_enter_ $state:snake _systems >]<M>(
+                    &mut self,
+                    systems: impl ::bevy::prelude::IntoScheduleConfigs<::bevy::ecs::system::ScheduleSystem, M>,
+                ) -> &mut Self {
+                    use $crate::state::AppStateExt;
+                    self.add_on_enter_state_systems(systems, [< Loading $state >]::Loaded)
+                }
+
+                fn [< add_on_exit_ $state:snake _systems >]<M>(
+                    &mut self,
+                    systems: impl ::bevy::prelude::IntoScheduleConfigs<::bevy::ecs::system::ScheduleSystem, M>,
+                ) -> &mut Self {
+                    use $crate::state::AppStateExt;
+                    self.add_on_exit_state_systems(systems, [< Loading $state >]::Loaded)
                 }
             }
         }
