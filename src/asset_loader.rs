@@ -191,7 +191,7 @@ macro_rules! game_state {
                     &mut self,
                     schedule: impl ::bevy::ecs::schedule::ScheduleLabel,
                     systems: impl ::bevy::prelude::IntoScheduleConfigs<::bevy::ecs::system::ScheduleSystem, M>,
-                    state: S) -> &mut Self;
+                ) -> &mut Self;
             }
 
             impl [< $state Ext >] for bevy::prelude::App {
@@ -206,7 +206,7 @@ macro_rules! game_state {
                     &mut self,
                     schedule: impl ::bevy::ecs::schedule::ScheduleLabel,
                     systems: impl ::bevy::prelude::IntoScheduleConfigs<::bevy::ecs::system::ScheduleSystem, M>,
-                    state: S) -> &mut Self {
+                ) -> &mut Self {
                     use $crate::state::AppStateExt;
 
                     self.add_state_system(schedule, systems, [< Loading $state >]::Loaded)

@@ -9,4 +9,5 @@ pub mod prelude {
     pub use crate::button::*;
     pub use crate::cleanup::*;
     pub use crate::component::*;
+    pub use crate::state::*;
 }
